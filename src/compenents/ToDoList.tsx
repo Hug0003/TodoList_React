@@ -80,9 +80,6 @@ function ToDoList() {
 
     function updateTask(e: React.MouseEvent<HTMLButtonElement>, id: number) {
         e.preventDefault();
-
-
-
     }
 
 
@@ -202,7 +199,7 @@ function ToDoList() {
             <form onSubmit={(e) => addTask(e)}>
                 <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}/>
                 <input type="text" placeholder="Description" value={description}
-                       onChange={(e) => (e.target.value)}/>
+                       onChange={(e) => setDescription(e.target.value)}/>
                 <input type="date" placeholder="Due Date" value={dueDate} onChange={(e) => setDueDate(e.target.value)}/>
 
                 <button type="submit" disabled={title.length == 0}>Add Task</button>
