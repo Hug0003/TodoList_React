@@ -87,8 +87,8 @@ function ToDoList() {
         return tasks.map((task) => {
         const isEditing = editingId === task.id;
         return (
-            <tr key={task.id}>
-                <th>
+            <tr key={task.id} className={task.done ? 'done' : ''}>
+                <td>
                     <input
                         type="checkbox"
                         checked={task.done}
@@ -96,11 +96,11 @@ function ToDoList() {
                             setTasks(tasks.map(t => t.id === task.id ? {...t, done: !t.done} : t));
                         }}
                     />
-                </th>
+                </td>
 
                 {isEditing ? (
                     <>
-                        <th>
+                        <td>
                             <input
                                 type="text"
                                 value={task.title}
@@ -129,44 +129,44 @@ function ToDoList() {
                                     t.id === task.id ? { ...t, description: e.target.value, updatedAt: String(Date.now()) } : t
                                 ))
                             }}/>
-                        </th>
-                        <th>{formatDate(task.createdAt)}</th>
-                        <th>{formatDate(task.updatedAt)}</th>
-                        <th>
-                            <button value={task.id} onClick={(e) => {
+                        </td>
+                        <td>{formatDate(task.createdAt)}</td>
+                        <td>{formatDate(task.updatedAt)}</td>
+                        <td>
+                            <button className="action-btn delete-btn" value={task.id} onClick={(e) => {
                                 delTask(e, task.id)
                             }}>Delete
                             </button>
-                        </th>
-                        <th>
-                            <button value={task.id} onClick={(e) => {
+                        </td>
+                        <td>
+                            <button className="action-btn update-btn" value={task.id} onClick={(e) => {
                                 setEditId(task.id)
 
                             }}>Update
                             </button>
-                        </th>
+                        </td>
                     </>
 
 
                 ): (
                     <>
-                        <th>{task.title}</th>
-                        <th>{task.description}</th>
-                        <th>{formatDate(task.dueDate)}</th>
-                        <th>{formatDate(task.createdAt)}</th>
-                        <th>{formatDate(task.updatedAt)}</th>
-                        <th>
-                            <button value={task.id} onClick={(e) => {
+                        <td>{task.title}</td>
+                        <td>{task.description}</td>
+                        <td>{formatDate(task.dueDate)}</td>
+                        <td>{formatDate(task.createdAt)}</td>
+                        <td>{formatDate(task.updatedAt)}</td>
+                        <td>
+                            <button className="action-btn delete-btn" value={task.id} onClick={(e) => {
                                 delTask(e, task.id)
                             }}>Delete
                             </button>
-                        </th>
-                        <th>
-                            <button value={task.id} onClick={(e) => {
+                        </td>
+                        <td>
+                            <button className="action-btn update-btn" value={task.id} onClick={(e) => {
                                 setEditId(task.id)
                             }}>Update
                             </button>
-                        </th>
+                        </td>
                     </>
                 )
                 }
@@ -193,10 +193,12 @@ function ToDoList() {
 
     }
 
-    return (<div>
+    return (<div className="todo-container">
             <h2> TO DO LIST </h2>
-            {nbTask()}
-            <form onSubmit={(e) => addTask(e)}>
+            <div className="task-stats">
+                {nbTask()}
+            </div>
+            <form className="todo-form" onSubmit={(e) => addTask(e)}>
                 <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}/>
                 <input type="text" placeholder="Description" value={description}
                        onChange={(e) => setDescription(e.target.value)}/>
@@ -205,11 +207,7 @@ function ToDoList() {
                 <button type="submit" disabled={title.length == 0}>Add Task</button>
             </form>
 
-            <ul>
-
-            </ul>
-
-            <table style={{border: "1px solid black", width: "100%"}}>
+            <table className="todo-table">
                 <thead>
                 <tr>
                     <th scope="col">Done</th>

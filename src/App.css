@@ -1,18 +1,195 @@
-*,
-*::before,
-*::after {
-    margin: 0;
-    padding: 0;
-    box-sizing: inherit;
+.App {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
 }
 
-html {
-    box-sizing: border-box;
-    font-size: 62.5%;
+.todo-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    padding: 3rem;
 }
 
-body {
-    font-weight: 300;
-    line-height: 1.6;
-    font-family: 'Lato', sans-serif;
+.todo-container h2 {
+    text-align: center;
+    color: #667eea;
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.task-stats {
+    text-align: center;
+    color: #666;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+
+.todo-form {
+    display: grid;
+    grid-template-columns: 2fr 3fr 1.5fr auto;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    padding: 2rem;
+    background: #f8f9fa;
+    border-radius: 15px;
+}
+
+.todo-form input[type="text"],
+.todo-form input[type="date"] {
+    padding: 1rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.todo-form input[type="text"]:focus,
+.todo-form input[type="date"]:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.todo-form button[type="submit"] {
+    padding: 1rem 2rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.todo-form button[type="submit"]:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+.todo-form button[type="submit"]:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.todo-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.todo-table thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.todo-table th {
+    padding: 1.2rem;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.todo-table tbody tr {
+    background: white;
+    border-bottom: 1px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.todo-table tbody tr:hover {
+    background: #f8f9fa;
+    transform: scale(1.01);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.todo-table tbody tr.done {
+    opacity: 0.6;
+    text-decoration: line-through;
+}
+
+.todo-table td {
+    padding: 1rem;
+    font-size: 0.95rem;
+}
+
+.todo-table input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #667eea;
+}
+
+.todo-table input[type="text"],
+.todo-table input[type="date"] {
+    width: 100%;
+    padding: 0.5rem;
+    border: 2px solid #e0e0e0;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.todo-table input[type="text"]:focus,
+.todo-table input[type="date"]:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.action-btn {
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-right: 0.5rem;
+}
+
+.delete-btn {
+    background: #ff6b6b;
+    color: white;
+}
+
+.delete-btn:hover {
+    background: #ff5252;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+}
+
+.update-btn {
+    background: #4ecdc4;
+    color: white;
+}
+
+.update-btn:hover {
+    background: #45b7af;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+}
+
+@media (max-width: 1024px) {
+    .todo-form {
+        grid-template-columns: 1fr;
+    }
+
+    .todo-table {
+        font-size: 0.85rem;
+    }
+
+    .todo-table th,
+    .todo-table td {
+        padding: 0.8rem 0.5rem;
+    }
 }
