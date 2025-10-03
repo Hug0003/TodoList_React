@@ -12,9 +12,7 @@ function ToDoList(){
     const [createdAt, setCreatedAt] = useState<string>('');
     const [updatedAt, setUpdatedAt] = useState<string>('');
 
-    function addTask(e){
-        e.preventDefault();
-
+    function addTask(){
 
     }
 
