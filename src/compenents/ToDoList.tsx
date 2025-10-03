@@ -17,7 +17,6 @@ function ToDoList() {
     const [title, setTitle] = useState<string>('');
     const [description, setDescription ] = useState<string>('');
     const [dueDate, setDueDate] = useState<string>("");
-    const [updatedAt, setUpdatedAt] = useState<string>("");
     const [editingId, setEditId] = useState<number | null>(null)
 
 
@@ -35,8 +34,12 @@ function ToDoList() {
             return;
         }
 
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const due = new Date(dueDate);
+        due.setHours(0, 0, 0, 0);
 
-        if (new Date(dueDate).getTime() < new Date().getTime()) {
+        if (due.getTime() < today.getTime()) {
             alert("La date d'échéance doit être ultérieure à la date actuelle.");
             return;
         }
@@ -75,13 +78,14 @@ function ToDoList() {
     function delTask(e: React.MouseEvent<HTMLButtonElement>, id: number) {
         e.preventDefault();
         console.log(id)
-        setTasks(tasks.filter((task) => task.id !== id));
+        const confirmation = prompt("Êtes-vous sûr de vouloir supprimer cette tâche ? (oui/non)")
+        if (confirmation?.toLowerCase() === "oui") {
+            setTasks(tasks.filter((task) => task.id !== id));
+            alert("tache n°" + id + " supprimée");
+        } else {
+            alert("suppression annulée");
+        }
     }
-
-    function updateTask(e: React.MouseEvent<HTMLButtonElement>, id: number) {
-        e.preventDefault();
-    }
-
 
     function getTasks() {
         return tasks.map((task) => {
@@ -101,9 +105,10 @@ function ToDoList() {
                 {isEditing ? (
                     <>
                         <td>
-                            <input
+                        <input
                                 type="text"
                                 value={task.title}
+                                className="input_update"
 
                                 onChange={(e) =>
                                     setTasks(tasks.map(t =>
@@ -111,9 +116,13 @@ function ToDoList() {
                                     ))
                                 }
                             />
+                        </td>
+                            <td>
                             <input
                                 type="text"
                                 value={task.description}
+                                className="input_update"
+
                                 onChange={(e) => {
                                     setTasks(tasks.map(t =>
                                         t.id === task.id ? { ...t, description: e.target.value, updatedAt: String(Date.now()) } : t
@@ -121,15 +130,20 @@ function ToDoList() {
                                 }
                             }
                             />
+                            </td>
+                        <td>
                             <input
                             type="date"
                             value={task.dueDate}
+                            className="input_update"
+
                             onChange={(e) => {
                                 setTasks(tasks.map(t =>
                                     t.id === task.id ? { ...t, description: e.target.value, updatedAt: String(Date.now()) } : t
                                 ))
                             }}/>
                         </td>
+
                         <td>{formatDate(task.createdAt)}</td>
                         <td>{formatDate(task.updatedAt)}</td>
                         <td>
@@ -140,9 +154,10 @@ function ToDoList() {
                         </td>
                         <td>
                             <button className="action-btn update-btn" value={task.id} onClick={(e) => {
-                                setEditId(task.id)
+                                if(task.title.length <= 3) return;
+                                setEditId(null);
 
-                            }}>Update
+                            }}>Save
                             </button>
                         </td>
                     </>

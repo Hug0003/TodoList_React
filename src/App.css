@@ -1,182 +1,213 @@
 .App {
     min-height: 100vh;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    padding: 2rem;
+    background: #f7f6f3;
+    padding: 3rem 1.5rem;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', sans-serif;
 }
 
 .todo-container {
-    max-width: 1200px;
+    width: 90vw;
     margin: 0 auto;
     background: white;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    padding: 3rem;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    padding: 0;
 }
 
 .todo-container h2 {
-    text-align: center;
-    color: #667eea;
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    padding: 2.5rem 3rem 0.5rem 3rem;
+    color: #37352f;
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
     font-weight: 700;
+    letter-spacing: -0.03em;
 }
 
 .task-stats {
-    text-align: center;
-    color: #666;
-    font-size: 1.1rem;
-    margin-bottom: 2rem;
-    padding: 1rem;
-    background: #f8f9fa;
-    border-radius: 10px;
+    padding: 0 3rem 1.5rem 3rem;
+    color: #787774;
+    font-size: 0.875rem;
+    margin-bottom: 0;
+    background: transparent;
+    border-radius: 0;
 }
 
 .todo-form {
     display: grid;
     grid-template-columns: 2fr 3fr 1.5fr auto;
-    gap: 1rem;
-    margin-bottom: 3rem;
-    padding: 2rem;
-    background: #f8f9fa;
-    border-radius: 15px;
+    gap: 0.75rem;
+    margin-bottom: 0;
+    padding: 1.5rem 3rem;
+    background: #fafaf9;
+    border-top: 1px solid #e9e9e7;
+    border-bottom: 1px solid #e9e9e7;
 }
 
 .todo-form input[type="text"],
 .todo-form input[type="date"] {
-    padding: 1rem;
-    border: 2px solid #e0e0e0;
-    border-radius: 10px;
-    font-size: 1rem;
-    transition: all 0.3s ease;
+    padding: 0.625rem 0.75rem;
+    border: 1px solid #e3e2e0;
+    border-radius: 3px;
+    font-size: 0.875rem;
+    transition: all 0.15s ease;
+    background: white;
 }
 
 .todo-form input[type="text"]:focus,
 .todo-form input[type="date"]:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: #9b9a97;
+    box-shadow: 0 0 0 1px #9b9a97;
 }
 
 .todo-form button[type="submit"] {
-    padding: 1rem 2rem;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 0.625rem 1.25rem;
+    background: #37352f;
     color: white;
     border: none;
-    border-radius: 10px;
-    font-size: 1rem;
-    font-weight: 600;
+    border-radius: 3px;
+    font-size: 0.875rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.15s ease;
 }
 
 .todo-form button[type="submit"]:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+    background: #2f2e2a;
 }
 
 .todo-form button[type="submit"]:disabled {
-    opacity: 0.5;
+    opacity: 0.4;
     cursor: not-allowed;
 }
 
 .todo-table {
     width: 100%;
-    border-collapse: separate;
+    border-collapse: collapse;
     border-spacing: 0;
-    overflow: hidden;
-    border-radius: 10px;
 }
 
 .todo-table thead {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: white;
+    background: transparent;
+    color: #787774;
+    border-bottom: 1px solid #e9e9e7;
 }
 
 .todo-table th {
-    padding: 1.2rem;
+    padding: 0.75rem 1rem;
     text-align: left;
     font-weight: 600;
-    font-size: 0.95rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.05em;
+}
+
+.todo-table th:first-child {
+    padding-left: 3rem;
+}
+
+.todo-table th:last-child {
+    padding-right: 3rem;
 }
 
 .todo-table tbody tr {
     background: white;
-    border-bottom: 1px solid #e0e0e0;
-    transition: all 0.3s ease;
+    border-bottom: 1px solid #f1f1ef;
+    transition: background 0.1s ease;
 }
 
 .todo-table tbody tr:hover {
-    background: #f8f9fa;
-    transform: scale(1.01);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background: #fafaf9;
 }
 
 .todo-table tbody tr.done {
-    opacity: 0.6;
+    opacity: 0.5;
+}
+
+.todo-table tbody tr.done td {
     text-decoration: line-through;
+    color: #9b9a97;
 }
 
 .todo-table td {
-    padding: 1rem;
-    font-size: 0.95rem;
+    padding: 0.875rem 1rem;
+    font-size: 0.875rem;
+    color: #37352f;
+}
+
+.todo-table td:first-child {
+    padding-left: 3rem;
+}
+
+.todo-table td:last-child {
+    padding-right: 3rem;
 }
 
 .todo-table input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
     cursor: pointer;
-    accent-color: #667eea;
+    accent-color: #37352f;
+    border-radius: 3px;
 }
 
 .todo-table input[type="text"],
 .todo-table input[type="date"] {
     width: 100%;
     padding: 0.5rem;
-    border: 2px solid #e0e0e0;
-    border-radius: 5px;
-    font-size: 0.9rem;
+    border: 1px solid #e3e2e0;
+    border-radius: 3px;
+    font-size: 0.875rem;
     margin-bottom: 0.5rem;
+    background: white;
 }
 
 .todo-table input[type="text"]:focus,
 .todo-table input[type="date"]:focus {
     outline: none;
-    border-color: #667eea;
+    border-color: #9b9a97;
+    box-shadow: 0 0 0 1px #9b9a97;
 }
 
 .action-btn {
-    padding: 0.6rem 1.2rem;
+    padding: 0.5rem 1rem;
     border: none;
-    border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 600;
+    border-radius: 3px;
+    font-size: 0.8125rem;
+    font-weight: 500;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.15s ease;
     margin-right: 0.5rem;
 }
 
 .delete-btn {
-    background: #ff6b6b;
-    color: white;
+    background: transparent;
+    color: #eb5757;
+    border: 1px solid rgba(235, 87, 87, 0.3);
 }
 
 .delete-btn:hover {
-    background: #ff5252;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+    background: rgba(235, 87, 87, 0.08);
+    border-color: #eb5757;
 }
 
 .update-btn {
-    background: #4ecdc4;
+    background: #37352f;
     color: white;
+    width: 6rem;
 }
 
 .update-btn:hover {
-    background: #45b7af;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(78, 205, 196, 0.4);
+    background: #2f2e2a;
+}
+
+.input_update{
+    width: 1rem;
+    padding: 0.5rem;
+    border: 1px solid #e3e2e0;
+    border-radius: 3px;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
 }
 
 @media (max-width: 1024px) {
