@@ -1,10 +1,11 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {Task} from '../types/Task';
 
 function ToDoList() {
     // list
     const [tasks, setTasks] = useState<Task[]>([]);
 
+    const idCounter = useRef(1);
     const [title, setTitle] = useState<string>('');
     const [description, setDescription] = useState<string>('');
     const [dueDate, setDueDate] = useState<string>("");
@@ -13,11 +14,24 @@ function ToDoList() {
 
     function addTask(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        let nbTasks = tasks.length;
-        const newId = nbTasks + 1;
+        const newId = idCounter.current++;
         const now = String(Date.now());
 
-        if (title.length < 3) return;
+        if (title.length < 3) {
+            alert("Le titre doit contenir au moins 3 caractères.");
+            return;
+        }
+        if (tasks.find(task => task.title === title)) {
+            alert("Le titre doit être unique.");
+            return;
+        }
+
+
+        if (new Date(dueDate).getTime() < new Date().getTime()) {
+            alert("La date d'échéance doit être ultérieure à la date actuelle.");
+            return;
+        }
+
 
         const newTask: Task = {
             id: newId,
@@ -36,48 +50,75 @@ function ToDoList() {
 
     }
 
-        function formatDate(date?: string) {
+    function formatDate(date?: string) {
 
-            if (!date) return "";
+        if (!date) return "";
 
-            if (isNaN(Number(date))){
-                // pour le calendar
-                const d = new Date(date);
-                if (isNaN(d.getTime())) return "";
-                return new Intl.DateTimeFormat(navigator.language, {
-                    year: 'numeric', month: 'long', day: 'numeric',
-                }).format(Number(d));
-            }else{
-                // pour le now
-                return new Intl.DateTimeFormat(navigator.language, {
-                    year: 'numeric', month: 'long', day: 'numeric',
-                }).format(Number(date));
-            }
+        if (isNaN(Number(date))) {
+            // pour le calendar
+            const d = new Date(date);
+            if (isNaN(d.getTime())) return "";
+            return new Intl.DateTimeFormat(navigator.language, {
+                year: 'numeric', month: 'long', day: 'numeric',
+            }).format(Number(d));
+        } else {
+            // pour le now
+            return new Intl.DateTimeFormat(navigator.language, {
+                year: 'numeric', month: 'long', day: 'numeric',
+            }).format(Number(date));
         }
+    }
 
-        function delTask(e: React.MouseEvent<HTMLButtonElement>, id: number) {
-            e.preventDefault();
-            console.log(id)
-            setTasks(tasks.filter((task) => task.id !== id));
-        }
+    function delTask(e: React.MouseEvent<HTMLButtonElement>, id: number) {
+        e.preventDefault();
+        console.log(id)
+        setTasks(tasks.filter((task) => task.id !== id));
+    }
 
 
     function getTasks() {
         return tasks.map((task) => (
                 <tr>
-                    <th><input type={"checkbox"} onClick={e => {
-                        setDone(!task.done);
-                    }}></input></th>
-                   <th key={task.id}>{task.title}</th>
+                    <th>
+                        <input
+                            type="checkbox"
+                            checked={task.done}
+                            onChange={() => {
+                                setTasks(tasks.map(t =>
+                                    t.id === task.id ? {...t, done: !t.done} : t
+                                ));
+                            }}
+                        />
+                    </th>
+                    <th key={task.id}>{task.title}</th>
                     <th>{task.description}</th>
                     <th>{formatDate(task.dueDate)}</th>
                     <th>{formatDate(task.createdAt)}</th>
                     <th>{formatDate(task.updatedAt)}</th>
-                    <th><button value={task.id} onClick={(e) => {delTask(e, task.id)}}>Delete</button></th>
+                    <th>
+                        <button value={task.id} onClick={(e) => {
+                            delTask(e, task.id)
+                        }}>Delete
+                        </button>
+                    </th>
 
                 </tr>
 
-        ))
+            )
+        )
+    }
+
+    function nbTask() {
+        let nbFait = 0
+        let nbAFaire = 0
+
+
+        tasks.map((task) => (
+                task.done ? nbFait++ : nbAFaire++
+            )
+        )
+
+        return <p>Vous avez {nbFait} tâche(s) de faite(s) et {nbAFaire} tâche(s) à faire</p>
 
 
     }
@@ -85,6 +126,7 @@ function ToDoList() {
     return (
         <div>
             <h2> TO DO LIST </h2>
+            {nbTask()}
             <form onSubmit={(e) => addTask(e)}>
                 <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}/>
                 <input type="text" placeholder="Description" value={description}
@@ -93,6 +135,10 @@ function ToDoList() {
 
                 <button type="submit">Add Task</button>
             </form>
+
+            <ul>
+
+            </ul>
 
             <table style={{border: "1px solid black", width: "100%"}}>
                 <thead>
@@ -107,7 +153,7 @@ function ToDoList() {
                 </tr>
                 </thead>
                 <tbody>
-                    {getTasks()}
+                {getTasks()}
                 </tbody>
             </table>
 
