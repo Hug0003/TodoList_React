@@ -1,16 +1,25 @@
-import React, {useState, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Task} from '../types/Task';
 
 function ToDoList() {
     // list
-    const [tasks, setTasks] = useState<Task[]>([]);
+    const [tasks, setTasks] = useState<Task[]>(() => {
+        const saved = localStorage.getItem("tasks");
+        return saved ? JSON.parse(saved) : [];
+    });
+
+    useEffect(() => {
+        localStorage.setItem("tasks", JSON.stringify(tasks));
+    }, [tasks]);
+
 
     const idCounter = useRef(1);
     const [title, setTitle] = useState<string>('');
-    const [description, setDescription] = useState<string>('');
+    const [description, setDescription ] = useState<string>('');
     const [dueDate, setDueDate] = useState<string>("");
-    const [done, setDone] = useState<boolean>(false);
     const [updatedAt, setUpdatedAt] = useState<string>("");
+    const [editingId, setEditId] = useState<number | null>(null)
+
 
     function addTask(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault()
@@ -34,13 +43,7 @@ function ToDoList() {
 
 
         const newTask: Task = {
-            id: newId,
-            title,
-            description,
-            dueDate,
-            done: false,
-            createdAt: now,
-            updatedAt: "",
+            id: newId, title, description, dueDate, done: false, createdAt: now, updatedAt: "",
         }
 
         setTasks([...tasks, newTask]);
@@ -75,37 +78,110 @@ function ToDoList() {
         setTasks(tasks.filter((task) => task.id !== id));
     }
 
+    function updateTask(e: React.MouseEvent<HTMLButtonElement>, id: number) {
+        e.preventDefault();
+
+
+
+    }
+
 
     function getTasks() {
-        return tasks.map((task) => (
-                <tr>
-                    <th>
-                        <input
-                            type="checkbox"
-                            checked={task.done}
-                            onChange={() => {
+        return tasks.map((task) => {
+        const isEditing = editingId === task.id;
+        return (
+            <tr key={task.id}>
+                <th>
+                    <input
+                        type="checkbox"
+                        checked={task.done}
+                        onChange={() => {
+                            setTasks(tasks.map(t => t.id === task.id ? {...t, done: !t.done} : t));
+                        }}
+                    />
+                </th>
+
+                {isEditing ? (
+                    <>
+                        <th>
+                            <input
+                                type="text"
+                                value={task.title}
+
+                                onChange={(e) =>
+                                    setTasks(tasks.map(t =>
+                                        t.id === task.id ? { ...t, title: e.target.value, updatedAt: String(Date.now()) } : t
+                                    ))
+                                }
+                            />
+                            <input
+                                type="text"
+                                value={task.description}
+                                onChange={(e) => {
+                                    setTasks(tasks.map(t =>
+                                        t.id === task.id ? { ...t, description: e.target.value, updatedAt: String(Date.now()) } : t
+                                    ))
+                                }
+                            }
+                            />
+                            <input
+                            type="date"
+                            value={task.dueDate}
+                            onChange={(e) => {
                                 setTasks(tasks.map(t =>
-                                    t.id === task.id ? {...t, done: !t.done} : t
-                                ));
-                            }}
-                        />
-                    </th>
-                    <th key={task.id}>{task.title}</th>
-                    <th>{task.description}</th>
-                    <th>{formatDate(task.dueDate)}</th>
-                    <th>{formatDate(task.createdAt)}</th>
-                    <th>{formatDate(task.updatedAt)}</th>
-                    <th>
-                        <button value={task.id} onClick={(e) => {
-                            delTask(e, task.id)
-                        }}>Delete
-                        </button>
-                    </th>
+                                    t.id === task.id ? { ...t, description: e.target.value, updatedAt: String(Date.now()) } : t
+                                ))
+                            }}/>
+                        </th>
+                        <th>{formatDate(task.createdAt)}</th>
+                        <th>{formatDate(task.updatedAt)}</th>
+                        <th>
+                            <button value={task.id} onClick={(e) => {
+                                delTask(e, task.id)
+                            }}>Delete
+                            </button>
+                        </th>
+                        <th>
+                            <button value={task.id} onClick={(e) => {
+                                setEditId(task.id)
 
-                </tr>
+                            }}>Update
+                            </button>
+                        </th>
+                    </>
 
-            )
+
+                ): (
+                    <>
+                        <th>{task.title}</th>
+                        <th>{task.description}</th>
+                        <th>{formatDate(task.dueDate)}</th>
+                        <th>{formatDate(task.createdAt)}</th>
+                        <th>{formatDate(task.updatedAt)}</th>
+                        <th>
+                            <button value={task.id} onClick={(e) => {
+                                delTask(e, task.id)
+                            }}>Delete
+                            </button>
+                        </th>
+                        <th>
+                            <button value={task.id} onClick={(e) => {
+                                setEditId(task.id)
+                            }}>Update
+                            </button>
+                        </th>
+                    </>
+                )
+                }
+
+
+
+
+            </tr>
+
         )
+
+    })
     }
 
     function nbTask() {
@@ -113,27 +189,23 @@ function ToDoList() {
         let nbAFaire = 0
 
 
-        tasks.map((task) => (
-                task.done ? nbFait++ : nbAFaire++
-            )
-        )
+        tasks.map((task) => (task.done ? nbFait++ : nbAFaire++))
 
-        return <p>Vous avez {nbFait} tâche(s) de faite(s) et {nbAFaire} tâche(s) à faire</p>
+        return (<p>Vous avez {nbFait} tâche(s) de faite(s) et {nbAFaire} tâche(s) à faire</p>)
 
 
     }
 
-    return (
-        <div>
+    return (<div>
             <h2> TO DO LIST </h2>
             {nbTask()}
             <form onSubmit={(e) => addTask(e)}>
                 <input type="text" placeholder="Title" value={title} onChange={(e) => setTitle(e.target.value)}/>
                 <input type="text" placeholder="Description" value={description}
-                       onChange={(e) => setDescription(e.target.value)}/>
+                       onChange={(e) => (e.target.value)}/>
                 <input type="date" placeholder="Due Date" value={dueDate} onChange={(e) => setDueDate(e.target.value)}/>
 
-                <button type="submit">Add Task</button>
+                <button type="submit" disabled={title.length == 0}>Add Task</button>
             </form>
 
             <ul>
@@ -150,6 +222,8 @@ function ToDoList() {
                     <th scope="col">Created At</th>
                     <th scope="col">Updated At</th>
                     <th scope="col">Delete</th>
+                    <th scope="col">Update</th>
+
                 </tr>
                 </thead>
                 <tbody>
@@ -158,8 +232,7 @@ function ToDoList() {
             </table>
 
 
-        </div>
-    )
+        </div>)
 }
 
 export default ToDoList;
