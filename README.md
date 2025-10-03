@@ -1,46 +1,64 @@
-# Getting Started with Create React App
+# To Do List
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 📄 Description
+C'est un projet d'école, réaliser un to do list en react, pour notre initiation au framework. 
+Vous pourrez y retrouver un formulaire pour créer vos task avec un titre, une description et une date de fin.
+Vous pourrez ensuite les voir dans le tableau situé en dessous. Vous pouvez gérer vos tasks on les mettant comme fini,
+ou alors modifier les valeurs ou supprimer une task.
+Un compteur de tasks est mise en place pour permettre de voir le nombre de task accomplie ou non accomplie.
 
-## Available Scripts
+## 🛠️ Technologies Utilisées
 
-In the project directory, you can run:
+- Typescript
+- React
+- CSS
+- HTML
+- CSS
+- Git
+- Github
+- webstorm ( jetbrains )
 
-### `npm start`
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## 🎥 Démo Visuelle
+![img.png](img.png)
 
-### `npm test`
+## ✨ Fonctionnalités
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- [x] Création de tasks
+- [x] Gestion des tasks (delete, edit, mark as done)
+- [x] Compteur de tasks accomplies
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 🚀 Installation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prérequis
+- Installer (Node.js, npm)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Étapes d'installation
 
-### `npm run eject`
+# Clonez le projet
+git clone https://github.com/Hug0003/TodoList_React.git
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+# Accédez au répertoire
+cd /to_do_list
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## 👥 Contributeurs
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+- moi : - moi : [@monprofil](https://github.com/Hug0003)
 
-## Learn More
+### Contribuer
+Les pull requests sont les bienvenues. Pour les changements majeurs, ouvrez une issue d'abord pour discuter de ce que vous souhaitez changer.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+
+
+
+
+## 📬 Contact
+
+Pour toute question, contactez-moi :
+- GitHub : [@monprofil](https://github.com/Hug0003)
+- E-mail : hugomeuriel@gmail.com
+
